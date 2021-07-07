@@ -32,13 +32,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'apps.users',
     'apps.students',
     'rest_framework.authtoken',
     'rest_framework',
+    'django.contrib.sessions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
@@ -101,6 +102,9 @@ DATABASES = {
     }
 }
 
+# Custom defined
+AUTH_USER_MODEL = 'users.User'
+APPEND_SLASH=False
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
