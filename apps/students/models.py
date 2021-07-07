@@ -19,3 +19,8 @@ class Student(models.Model):
     form = models.IntegerField()
     enrollment_year = models.IntegerField()
 
+
+class Announcement(models.Model):
+    id = models.IntegerField(primary_key=True)
+    subject = models.TextField()
+    content = models.TextField()
