@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'apps.users',
     'apps.students',
+    'apps.announcements',
     'rest_framework.authtoken',
     'rest_framework',
     'django.contrib.sessions',

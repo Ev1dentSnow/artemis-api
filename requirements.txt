@@ -1,2 +1,3 @@
 djangorestframework
 djangorestframework_simplejwt
+python-decouple

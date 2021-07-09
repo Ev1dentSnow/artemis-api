@@ -16,10 +16,10 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        exclude = ('id',)
+        fields = '__all__'
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
-        users = User.objects.create(**user_data)
-        users.student.set(validated_data)
-        return Response(data='Student created', status=status.HTTP_201_CREATED)
+        user = User.objects.create(**user_data)
+        student = Student.objects.create(**validated_data, user_id=user.id)
+        return student
