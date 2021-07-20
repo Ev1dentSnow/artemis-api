@@ -9,4 +9,4 @@ class User(AbstractUser):
     dob = models.DateField(default='2003-07-07')  # default value only used for super users
     is_student = models.BooleanField('student', default=False)
     is_teacher = models.BooleanField('teacher', default=False)
-    comments = models.TextField()
+    comments = models.TextField(blank=True)

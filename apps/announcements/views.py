@@ -1,14 +1,19 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
 from rest_framework import status
+from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
+from ArtemisAPI_django.permissions import isStudent
 from apps.announcements.models import Announcement
 from apps.announcements.serializers import AnnouncementSerializer
 
 
 class AnnouncementsListView(APIView):
+
+    permission_classes = (IsAuthenticated,)  # Anyone regardless of role may view announcements, except for non authenticated users
 
     def get(self, request):
         announcements = Announcement.objects.all()  # select all announcements in db
@@ -24,10 +29,10 @@ class AnnouncementsListView(APIView):
 
 
 class AnnouncementInstanceView(APIView):
-
+    permission_classes = (IsAuthenticated,)
     def get(self, request, announcement_id):
         announcement = Announcement.objects.filter(id=announcement_id)
         serializer = AnnouncementSerializer(announcement, many=True)  # Find out why many=True is necessary
         if announcement:  # checking if queryset is empty
             return Response(serializer.data, status=status.HTTP_200_OK)
-        raise Http404  # if id not found
+        raise NotFound(detail='announcement with that id does not exist')  # if id not found

@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import permissions
 
-import ArtemisAPI_django.permissions
+import ArtemisAPI_django.permissions as permissions
 from apps.students.models import Student
 from apps.students.serializers import StudentSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -26,6 +26,7 @@ class ArtemisTokenObtainPairView(TokenObtainPairView):
 
 
 class StudentInstanceView(APIView):
+    serializer_class = StudentSerializer
 
     def get(self, request, student_user_id):
         student = Student.objects.filter(user=student_user_id)
@@ -36,8 +37,9 @@ class StudentInstanceView(APIView):
 
 
 class StudentsListView(APIView):
-    # permission_classes = (
-    # permissions.IsAuthenticated, ArtemisAPI_django.permissions.isTeacher | ArtemisAPI_django.permissions.isAdmin)
+    permission_classes = (permissions.isAdmin,)
+
+    serializer_class = StudentSerializer
 
     def get(self, request):
         """
@@ -55,5 +57,5 @@ class StudentsListView(APIView):
         serializer = StudentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response({'detail': 'student created successfully'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

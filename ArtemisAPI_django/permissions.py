@@ -11,7 +11,7 @@ class isStudent(BasePermission):
     def has_permission(self, request, view):
         user_id = request.user.id
         role = request.user.role
-        has_permission = User.objects.filter(id=user_id, role=role).exists()
+        has_permission = request.user.groups.filter(name='students').exists()
         return has_permission
 
 
@@ -21,9 +21,7 @@ class isTeacher(BasePermission):
     """
 
     def has_permission(self, request, view):
-        user_id = request.user.id
-        role = request.user.role
-        has_permission = User.objects.filter(id=user_id, role=role).exists()
+        has_permission = request.user.groups.filter(name='teachers').exists()
         return has_permission
 
 
@@ -33,7 +31,6 @@ class isAdmin(BasePermission):
     """
 
     def has_permission(self, request, view):
-        user_id = request.user.id
-        role = request.user.role
-        has_permission = User.objects.filter(id=user_id, role=role).exists()
+
+        has_permission = request.user.groups.filter(name='admins').exists()
         return has_permission

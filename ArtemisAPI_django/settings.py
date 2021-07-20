@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'drf_yasg',
+    'apps.weather',
     'apps.users',
     'apps.students',
     'apps.announcements',
@@ -49,6 +51,13 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Artemis API',
+    'DESCRIPTION': 'Your project description',
+    'VERSION': '1.0.0',
 }
 
 SIMPLE_JWT = {
@@ -105,7 +114,7 @@ DATABASES = {
 
 # Custom defined
 AUTH_USER_MODEL = 'users.User'
-APPEND_SLASH=False
+APPEND_SLASH = True
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
