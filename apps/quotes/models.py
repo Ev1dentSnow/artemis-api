@@ -9,16 +9,16 @@ class Quote:
 
     @property
     def quote(self):
-        return self.quote
+        return self._quote
 
     @quote.setter
     def quote(self, quote):
-        self.quote = quote
+        self._quote = quote
 
     @property
     def author(self):
-        return self.author
+        return self._author
 
     @author.setter
     def author(self, author):
-        self.author = author
+        self._author = author

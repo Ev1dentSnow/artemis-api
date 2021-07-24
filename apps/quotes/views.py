@@ -23,5 +23,5 @@ class QuoteView(APIView):
         author = json_data[0]['a']
 
         q = Quote(quote, author)
-        serializer = QuoteSerializer(models.Quote.quote)
+        serializer = QuoteSerializer(q)
         return Response(serializer.data)

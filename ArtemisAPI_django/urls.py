@@ -26,6 +26,8 @@ from drf_yasg import openapi
 
 import apps.weather.views
 import apps.quotes.views
+import apps.authentication.views
+
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -46,6 +48,6 @@ urlpatterns = [
     path('api/announcements/', include('apps.announcements.urls')),
     path('api/weather', apps.weather.views.WeatherView.as_view()),
     path('api/quote', apps.quotes.views.QuoteView.as_view()),
-    path('api/auth', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/authentication', apps.authentication.views.MyTokenObtainPairView.as_view()),
     path('admin/', admin.site.urls),
 ]

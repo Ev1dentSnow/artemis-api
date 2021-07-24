@@ -29,7 +29,7 @@ class StudentInstanceView(APIView):
     serializer_class = StudentSerializer
 
     def get(self, request, student_user_id):
-        student = Student.objects.filter(user=student_user_id)
+        student = Student.objects.filter(user_id=student_user_id)
         serializer = StudentSerializer(student, many=True)
         if student:  # checking if queryset is empty
             return Response(serializer.data, status=status.HTTP_200_OK)
