@@ -1,6 +1,9 @@
-djangorestframework
+djangorestframework~=3.12.4
 djangorestframework_simplejwt
 python-decouple
 drf-yasg
 drf-spectacular
-apscheduler
+apscheduler~=3.7.0
+Django~=3.2.5
+requests~=2.26.0
+PyMySQL~=1.0.2

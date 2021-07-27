@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from datetime import timedelta
 from pathlib import Path
 from decouple import config
+import pymysql
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,6 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+pymysql.version_info = (1, 4, 2, "final", 0)
+pymysql.install_as_MySQLdb()
 
 # Application definition
 
@@ -114,6 +117,7 @@ DATABASES = {
     }
 }
 
+
 # Custom defined
 AUTH_USER_MODEL = 'users.User'
 APPEND_SLASH = True
@@ -121,20 +125,7 @@ APPEND_SLASH = True
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.authentication.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.authentication.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.authentication.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.authentication.password_validation.NumericPasswordValidator',
-    },
-]
+AUTH_PASSWORD_VALIDATORS = []
 
 
 # Internationalization

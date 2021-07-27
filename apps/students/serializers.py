@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Group
 from rest_framework import serializers, status
 from rest_framework.response import Response
 
@@ -10,3 +11,10 @@ class StudentSerializer(serializers.Serializer):
     user_details = BasicUserSerializer(source='user')  # source is the actual name of the field
     form = serializers.IntegerField()
     enrollment_year = serializers.IntegerField()
+
+    def create(self, validated_data):
+        new_user = User.objects.create_user(**validated_data['user'])
+        student = Student.objects.create(user_id=new_user.id, form=validated_data['form'], enrollment_year=validated_data['enrollment_year'])
+        student_group = Group.objects.get(name='students')
+        new_user.groups.add(student_group)
+        return student
