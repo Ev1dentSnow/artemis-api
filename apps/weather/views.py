@@ -4,10 +4,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 import json
 
+from ArtemisAPI_django.permissions import isAuthenticated
+
 
 class WeatherView(APIView):
 
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (isAuthenticated,)
 
     def get(self, request):
         file = open('apps/weather/weather_data.json')

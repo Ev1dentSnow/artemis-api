@@ -6,14 +6,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
-from ArtemisAPI_django.permissions import isStudent
+from ArtemisAPI_django.permissions import isStudent, isAuthenticated
 from apps.announcements.models import Announcement
 from apps.announcements.serializers import AnnouncementSerializer
 
 
 class AnnouncementsListView(APIView):
 
-    permission_classes = (IsAuthenticated,)  # Anyone regardless of role may view announcements, except for non authenticated users
+    permission_classes = (isAuthenticated,)  # Any authenticated user can view the announcements
 
     def get(self, request):
         announcements = Announcement.objects.all()  # select all announcements in db
@@ -29,7 +29,9 @@ class AnnouncementsListView(APIView):
 
 
 class AnnouncementInstanceView(APIView):
-    permission_classes = (IsAuthenticated,)
+
+    permission_classes = (isAuthenticated,)
+
     def get(self, request, announcement_id):
         announcement = Announcement.objects.filter(id=announcement_id)
         serializer = AnnouncementSerializer(announcement, many=True)  # Find out why many=True is necessary

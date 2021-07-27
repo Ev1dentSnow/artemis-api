@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from ArtemisAPI_django.permissions import isAuthenticated
 from apps.quotes import models
 from apps.quotes.models import Quote
 from apps.quotes.serializers import QuoteSerializer
@@ -12,7 +13,7 @@ from apps.quotes.serializers import QuoteSerializer
 
 class QuoteView(APIView):
 
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (isAuthenticated,)
 
     def get(self, request):
 
