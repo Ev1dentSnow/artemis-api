@@ -17,10 +17,11 @@ class BasicUserSerializer(serializers.Serializer):  # For user creation
     username = serializers.CharField()
     password = serializers.CharField()
     email = serializers.EmailField()
+    house = serializers.CharField()
     dob = serializers.DateField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
-    comments = serializers.CharField()
+    comments = serializers.CharField(required=False)
 
 
 

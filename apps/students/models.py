@@ -12,3 +12,7 @@ class Student(models.Model):
     user = models.OneToOneField(apps.users.models.User, on_delete=models.CASCADE, primary_key=True)
     form = models.IntegerField()
     enrollment_year = models.IntegerField()
+    primary_contact_name = models.CharField(null=True, max_length=256, default=None)
+    primary_contact_email = models.CharField(null=True, max_length=256, default=None)
+    secondary_contact_name = models.CharField(null=True, max_length=256, default=None)
+    secondary_contact_email = models.CharField(null=True, max_length=256, default=None)

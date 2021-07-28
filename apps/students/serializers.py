@@ -11,10 +11,21 @@ class StudentSerializer(serializers.Serializer):
     user_details = BasicUserSerializer(source='user')  # source is the actual name of the field
     form = serializers.IntegerField()
     enrollment_year = serializers.IntegerField()
+    primary_contact_name = serializers.CharField()
+    primary_contact_email = serializers.EmailField()
+    secondary_contact_name = serializers.CharField()
+    secondary_contact_email = serializers.EmailField()
 
     def create(self, validated_data):
         new_user = User.objects.create_user(**validated_data['user'])
-        student = Student.objects.create(user_id=new_user.id, form=validated_data['form'], enrollment_year=validated_data['enrollment_year'])
+        student = Student.objects.create(user_id=new_user.id, form=validated_data['form'],
+                                         enrollment_year=validated_data['enrollment_year'],
+                                         primary_contact_name=validated_data['primary_contact_name'],
+                                         primary_contact_email=validated_data['primary_contact_email'],
+                                         secondary_contact_name=validated_data['secondary_contact_name'],
+                                         secondary_contact_email=validated_data['secondary_contact_email']
+                                         )
+
         student_group = Group.objects.get(name='students')
         new_user.groups.add(student_group)
         return student
