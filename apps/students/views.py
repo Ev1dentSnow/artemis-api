@@ -12,6 +12,8 @@ from apps.students.serializers import StudentSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+from apps.users.models import User
+
 
 class ArtemisTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -26,6 +28,8 @@ class ArtemisTokenObtainPairView(TokenObtainPairView):
 
 
 class StudentInstanceView(APIView):
+
+    permission_classes = (permissions.isAuthenticated | permissions.isAdmin,)
     serializer_class = StudentSerializer
 
     def get(self, request, student_user_id):
@@ -34,6 +38,13 @@ class StudentInstanceView(APIView):
         if student:  # checking if queryset is empty
             return Response(serializer.data, status=status.HTTP_200_OK)
         raise Http404
+
+    def delete(self, request, student_user_id):
+        student = Student.objects.get(user_id=student_user_id)
+        user = User.objects.get(id=student_user_id)
+        student.delete()
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class StudentsListView(APIView):

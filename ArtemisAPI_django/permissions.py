@@ -14,7 +14,7 @@ class isAuthenticated(IsAuthenticated):
 
         if is_authenticated:
             if request.method not in SAFE_METHODS:  # If request is something dangerous, check that the user is an admin
-                has_permission = request.user.groups.filter(name='admins').exists()
+                has_permission = False
                 return has_permission
 
             has_permission = True
