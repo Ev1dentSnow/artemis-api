@@ -25,3 +25,4 @@ class BasicUserSerializer(serializers.Serializer):  # For user creation
 
 
 
+

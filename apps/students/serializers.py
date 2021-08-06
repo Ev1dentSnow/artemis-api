@@ -8,7 +8,8 @@ from apps.users.serializers import BasicUserSerializer
 
 
 class StudentSerializer(serializers.Serializer):
-    user_details = BasicUserSerializer(source='user')  # source is the actual name of the field
+    user_details = BasicUserSerializer()  # source is the actual name of the field
+
     form = serializers.IntegerField()
     enrollment_year = serializers.IntegerField()
     primary_contact_name = serializers.CharField()
@@ -29,3 +30,11 @@ class StudentSerializer(serializers.Serializer):
         student_group = Group.objects.get(name='students')
         new_user.groups.add(student_group)
         return student
+
+    def update(self, instance, validated_data):
+        user_details = validated_data.pop('user_details', None)
+        student_details = validated_data
+
+        if user_details is not None:
+            for item in user_details:
+                instance.item = item[item]

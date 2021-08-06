@@ -33,13 +33,39 @@ class StudentInstanceView(APIView):
     serializer_class = StudentSerializer
 
     def get(self, request, student_user_id):
+        """
+        Fetch one student
+        :param request:
+        :param student_user_id:
+        :return: Response
+        """
         student = Student.objects.filter(user_id=student_user_id)
         serializer = StudentSerializer(student, many=True)
         if student:  # checking if queryset is empty
             return Response(serializer.data, status=status.HTTP_200_OK)
         raise Http404
 
+    def patch(self, request, student_user_id):
+        """
+        Modify student details
+        :param request:
+        :param student_user_id:
+        :return: Response
+        """
+        student = Student.objects.filter(user_id=student_user_id)
+        serializer = StudentSerializer(student, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
     def delete(self, request, student_user_id):
+        """
+        Permanently delete student and their user details
+        :param request:
+        :param student_user_id:
+        :return: Response
+        """
         student = Student.objects.get(user_id=student_user_id)
         user = User.objects.get(id=student_user_id)
         student.delete()
