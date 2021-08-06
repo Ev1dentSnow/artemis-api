@@ -52,7 +52,7 @@ class StudentInstanceView(APIView):
         :param student_user_id:
         :return: Response
         """
-        student = Student.objects.filter(user_id=student_user_id)
+        student = Student.objects.get(user_id=student_user_id)
         serializer = StudentSerializer(student, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()

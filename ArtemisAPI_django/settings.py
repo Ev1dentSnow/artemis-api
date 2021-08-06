@@ -37,8 +37,8 @@ pymysql.install_as_MySQLdb()
 INSTALLED_APPS = [
     'drf_yasg',
     'apps.authentication',
-    'apps.weather',
-    'apps.quotes',
+    #'apps.weather',
+    #'apps.quotes',
     'apps.users',
     'apps.students',
     'apps.announcements',
