@@ -8,7 +8,7 @@ from apps.users.serializers import BasicUserSerializer
 
 
 class StudentSerializer(serializers.Serializer):
-    user_details = BasicUserSerializer()  # source is the actual name of the field
+    user_details = BasicUserSerializer(source='user')  # source is the actual name of the field in the model
 
     form = serializers.IntegerField()
     enrollment_year = serializers.IntegerField()
@@ -32,7 +32,7 @@ class StudentSerializer(serializers.Serializer):
         return student
 
     def update(self, instance, validated_data):
-        user_details = validated_data.pop('user_details', None)
+        user_details = validated_data.pop('user', None)
         student_details = validated_data
 
         if user_details is not None:
@@ -43,8 +43,9 @@ class StudentSerializer(serializers.Serializer):
             user.last_name = user_details.get('last_name', user.last_name)
             user.email = user_details.get('email', user.email)
             user.dob = user_details.get('dob', user.dob)
-            user.email = user_details.get('comments', user.comments)
+            user.email = user_details.get('email', user.email)
             user.house = user_details.get('house', user.house)
+            user.comments = user_details.get('comments', user.comments)
             user.save()
 
         if student_details is not None:
