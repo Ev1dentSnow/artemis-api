@@ -55,7 +55,7 @@ class StudentSerializer(serializers.Serializer):
             instance.primary_contact_email = validated_data.get('primary_contact_email', instance.primary_contact_email)
             instance.secondary_contact_name = validated_data.get('secondary_contact_name',
                                                                  instance.secondary_contact_name)
-            instance.secondary_contact_email = validated_data.get('seconday_contact_email',
+            instance.secondary_contact_email = validated_data.get('secondary_contact_email',
                                                                   instance.secondary_contact_email)
             instance.save()
 
