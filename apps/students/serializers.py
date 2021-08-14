@@ -38,7 +38,7 @@ class StudentSerializer(serializers.Serializer):
         if user_details is not None:
             user = User.objects.get(id=instance.user_id)
             user.username = user_details.get('username', user.username)
-            user.password = user_details.get('password', user.password)
+            user.set_password(user_details.get('password', user.password))
             user.first_name = user_details.get('first_name', user.first_name)
             user.last_name = user_details.get('last_name', user.last_name)
             user.email = user_details.get('email', user.email)
