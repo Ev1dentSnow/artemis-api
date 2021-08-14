@@ -8,5 +8,5 @@ class Teacher(models.Model):
     class Meta:
         db_table = 'teachers'
 
-        user = models.OneToOneField(apps.users.models.User, on_delete=CASCADE, primary_key=True)
-        subject = models.CharField()
+    user = models.OneToOneField(apps.users.models.User, on_delete=CASCADE, primary_key=True)
+    subject = models.CharField(max_length=256)
