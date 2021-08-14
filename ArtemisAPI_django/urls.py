@@ -44,6 +44,7 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
+    path('api/classes/', include('apps.classes.urls')),
     path('api/students/', include('apps.students.urls')),
     path('api/announcements/', include('apps.announcements.urls')),
     path('api/weather', apps.weather.views.WeatherView.as_view()),
