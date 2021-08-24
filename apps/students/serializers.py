@@ -2,6 +2,7 @@ from django.contrib.auth.models import Group
 from rest_framework import serializers, status
 from rest_framework.response import Response
 
+from apps.classes.models import Classes
 from apps.students.models import Student
 from apps.users.models import User
 from apps.users.serializers import BasicUserSerializer
@@ -60,3 +61,14 @@ class StudentSerializer(serializers.Serializer):
             instance.save()
 
         return instance
+
+
+class StudentInstanceClassSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Classes
+        fields = ['id', 'name', 'graduation_date']
+
+
+
+
+

@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
-from ArtemisAPI_django.permissions import isStudent, isAuthenticated
+from ArtemisAPI.permissions import isStudent, isAuthenticated
 from apps.announcements.models import Announcement
 from apps.announcements.serializers import AnnouncementSerializer
 

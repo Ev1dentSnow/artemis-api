@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ArtemisAPI_django.iml" filepath="$PROJECT_DIR$/.idea/ArtemisAPI_django.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ArtemisAPI.iml" filepath="$PROJECT_DIR$/.idea/ArtemisAPI.iml" />
     </modules>
   </component>
 </project>

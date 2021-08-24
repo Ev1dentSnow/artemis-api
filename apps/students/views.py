@@ -6,9 +6,10 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import permissions
 
-import ArtemisAPI_django.permissions as permissions
+import ArtemisAPI.permissions as permissions
+from apps.classes.models import Classes, StudentClasses
 from apps.students.models import Student
-from apps.students.serializers import StudentSerializer
+from apps.students.serializers import StudentSerializer, StudentInstanceClassSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -28,7 +29,6 @@ class ArtemisTokenObtainPairView(TokenObtainPairView):
 
 
 class StudentInstanceView(APIView):
-
     permission_classes = (permissions.isAuthenticated | permissions.isAdmin,)
     serializer_class = StudentSerializer
 
@@ -71,6 +71,20 @@ class StudentInstanceView(APIView):
         student.delete()
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class StudentInstanceClassesView(APIView):
+    permission_classes = (permissions.isTeacher | permissions.isAdmin,)
+
+    def get(self, request, student_user_id):
+        """
+        Get a list of classes a specific student is in
+        """
+        class_ids = []
+        for student_class in StudentClasses.objects.filter(student_id=student_user_id):
+            class_ids.append(Classes.objects.get(id=student_class.class_id_id))
+        serializer = StudentInstanceClassSerializer(class_ids, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class StudentsListView(APIView):

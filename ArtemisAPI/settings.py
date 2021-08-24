@@ -85,7 +85,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'ArtemisAPI_django.urls'
+ROOT_URLCONF = 'ArtemisAPI.urls'
 
 TEMPLATES = [
     {
