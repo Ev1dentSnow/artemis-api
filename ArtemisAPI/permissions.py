@@ -1,3 +1,5 @@
+import re
+
 from rest_framework.permissions import BasePermission, SAFE_METHODS, IsAuthenticated
 
 from apps.users.models import User
@@ -23,6 +25,29 @@ class isAuthenticated(IsAuthenticated):
         else:
             has_permission = False
             return has_permission
+
+
+class isOwner(BasePermission):
+    """
+    Grants access if the requested resource 'belongs' to the user. e.g if a student is trying to access their marks, or their class's info
+    This disallows some other student from viewing this requested students data, however with the help of the other permissions, teachers
+    and or admins will still be able to override this permission as they need to view data for all students and not just one
+    """
+
+    def has_permission(self, request, view):
+        we = request._request.path
+        requested_id = 0
+
+        for word in we.split("/"):
+            if word.isdigit():
+                requested_id = word
+                break
+
+        if request.user.id == requested_id:
+            has_permission = True
+            return has_permission
+        has_permission = False
+        return has_permission
 
 
 class isStudent(BasePermission):

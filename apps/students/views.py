@@ -75,7 +75,7 @@ class StudentInstanceView(APIView):
 
 
 class StudentInstanceClassesView(APIView):
-    permission_classes = (permissions.isTeacher | permissions.isAdmin,)
+    permission_classes = (permissions.isOwner | permissions.isTeacher | permissions.isAdmin,)
 
     def get(self, request, student_user_id):
         """
