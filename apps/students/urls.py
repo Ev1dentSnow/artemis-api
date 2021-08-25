@@ -9,4 +9,5 @@ urlpatterns = [
     path('classes/', apps.classes.views.StudentClassesListView.as_view()),
     #path('classes/', include('apps.classes.urls')),
     path('<int:student_user_id>/classes', apps.students.views.StudentInstanceClassesView.as_view()),
+    path('<int:student_user_id>/marks', apps.students.views.StudentInstanceMarksView.as_view()),
 ]

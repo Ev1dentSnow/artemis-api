@@ -14,6 +14,6 @@ class Marks(models.Model):
     assignment = models.OneToOneField(apps.assignments.models.Assignment, on_delete=CASCADE)
     class_id = models.OneToOneField(apps.classes.models.Classes, on_delete=CASCADE)
     student = models.OneToOneField(apps.students.models.Student, on_delete=CASCADE)
-    mark_awarded = models.DecimalField(max_digits=3, decimal_places=1)
+    mark_awarded = models.DecimalField(max_digits=19, decimal_places=1)
 
 

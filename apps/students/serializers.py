@@ -2,6 +2,7 @@ from django.contrib.auth.models import Group
 from rest_framework import serializers, status
 from rest_framework.response import Response
 
+from apps.assignments.serializers import AssignmentSerializer
 from apps.classes.models import Classes
 from apps.students.models import Student
 from apps.users.models import User
@@ -69,6 +70,8 @@ class StudentInstanceClassSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'graduation_date']
 
 
-
-
-
+class StudentInstanceMarksSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    assignment = AssignmentSerializer()
+    mark_awarded = serializers.DecimalField(decimal_places=1, max_digits=19)
+    class_id = serializers.IntegerField(source='class_id_id')
