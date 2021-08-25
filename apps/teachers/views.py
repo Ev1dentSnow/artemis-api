@@ -1,3 +1,8 @@
 from django.shortcuts import render
+from rest_framework.views import APIView
 
-# Create your views here.
+from ArtemisAPI import permissions
+from apps.teachers.serializers import BasicTeacherUserDetailsSerializer
+from apps.users.models import User
+
+
