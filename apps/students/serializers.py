@@ -20,6 +20,8 @@ class StudentSerializer(serializers.Serializer):
     secondary_contact_email = serializers.EmailField()
 
     def create(self, validated_data):
+        if 'password' not in validated_data['user']:
+            validated_data['user']['password'] = validated_data['user']['username']
         new_user = User.objects.create_user(**validated_data['user'])
         student = Student.objects.create(user_id=new_user.id, form=validated_data['form'],
                                          enrollment_year=validated_data['enrollment_year'],

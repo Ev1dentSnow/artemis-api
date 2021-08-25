@@ -15,7 +15,7 @@ class BasicUserSerializer(serializers.Serializer):  # For user creation
 
     id = serializers.ReadOnlyField()
     username = serializers.CharField()
-    password = serializers.CharField()
+    password = serializers.CharField(required=False)
     email = serializers.EmailField()
     house = serializers.CharField()
     dob = serializers.DateField()
