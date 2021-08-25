@@ -35,15 +35,14 @@ class isOwner(BasePermission):
     """
 
     def has_permission(self, request, view):
-        we = request._request.path
+        requested_user_path = request._request.path
         requested_id = 0
-
-        for word in we.split("/"):
+        for word in requested_user_path.split("/"):
             if word.isdigit():
                 requested_id = word
                 break
 
-        if request.user.id == requested_id:
+        if int(request.user.id) == int(requested_id):
             has_permission = True
             return has_permission
         has_permission = False
