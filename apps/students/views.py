@@ -8,6 +8,8 @@ from rest_framework import permissions
 
 import ArtemisAPI.permissions as permissions
 from apps.classes.models import Classes, StudentClasses
+from apps.dots.models import Dots
+from apps.dots.serializers import DotsSerializer
 from apps.marks.models import Marks
 from apps.students.models import Student
 from apps.students.serializers import StudentSerializer, StudentInstanceClassSerializer, StudentInstanceMarksSerializer
@@ -88,6 +90,18 @@ class StudentInstanceClassesView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class StudentInstanceDotsView(APIView):
+    permission_classes = (permissions.isOwner | permissions.isTeacher | permissions.isAdmin,)
+
+    def get(self, request, student_user_id):
+        """
+        Get a list of a specific student's dots
+        """
+        dots = Dots.objects.filter(student_id=student_user_id)
+        serializer = DotsSerializer(dots, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 class StudentInstanceMarksView(APIView):
     # TODO: Make it so that students can't view each other's marks for privacy reasons
     permission_classes = (permissions.isStudent | permissions.isTeacher | permissions.isAdmin,)
@@ -102,11 +116,6 @@ class StudentInstanceMarksView(APIView):
             marks_list.append(mark)
         serializer = StudentInstanceMarksSerializer(marks_list, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-
-
-
 
 
 class StudentsListView(APIView):
