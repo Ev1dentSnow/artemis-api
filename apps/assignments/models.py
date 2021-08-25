@@ -8,7 +8,7 @@ class Assignment(models.Model):
     class Meta:
         db_table = 'assignments'
 
-    teacher = models.OneToOneField(apps.teachers.models.Teacher, on_delete=CASCADE)
+    teacher = models.ForeignKey(apps.teachers.models.Teacher, on_delete=CASCADE)
     assignment_name = models.CharField(max_length=256)
     max_marks = models.DecimalField(max_digits=19, decimal_places=1)
     date_assigned = models.DateField()
