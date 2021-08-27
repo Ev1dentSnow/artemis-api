@@ -24,5 +24,12 @@ class BasicUserSerializer(serializers.Serializer):  # For user creation
     comments = serializers.CharField(required=False)
 
 
+class UniqueDetailsSerializer(serializers.Serializer):  # To check which usernames and emails have already been taken
+    id = serializers.ReadOnlyField()
+    username = serializers.CharField()
+    email = serializers.EmailField()
+
+
+
 
 

@@ -27,6 +27,7 @@ from drf_yasg import openapi
 import apps.weather.views
 import apps.quotes.views
 import apps.authentication.views
+import apps.users.views
 
 
 schema_view = get_schema_view(
@@ -48,6 +49,7 @@ urlpatterns = [
     path('api/dots/', include('apps.dots.urls')),
     #path('api/teachers/', include('apps.teachers.urls')),
     path('api/students/', include('apps.students.urls')),
+    path('api/users', apps.users.views.UsersListView.as_view()),
     path('api/announcements/', include('apps.announcements.urls')),
     path('api/weather', apps.weather.views.WeatherView.as_view()),
     path('api/quote', apps.quotes.views.QuoteView.as_view()),
