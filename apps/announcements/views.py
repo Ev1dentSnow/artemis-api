@@ -6,14 +6,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
-from ArtemisAPI.permissions import isStudent, isAuthenticated
+from ArtemisAPI.permissions import isStudent, isAdmin, isAuthenticated
 from apps.announcements.models import Announcement
 from apps.announcements.serializers import AnnouncementSerializer
 
 
 class AnnouncementsListView(APIView):
 
-    permission_classes = (isAuthenticated,)  # Any authenticated user can view the announcements
+    permission_classes = (isAuthenticated | isAdmin,)  # Any authenticated user can view the announcements
 
     def get(self, request):
         announcements = Announcement.objects.all()  # select all announcements in db
