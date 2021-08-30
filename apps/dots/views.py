@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ArtemisAPI import permissions
+from artemisapi import permissions
 from apps.dots.models import Dots
 from apps.dots.serializers import DotsSerializer
 

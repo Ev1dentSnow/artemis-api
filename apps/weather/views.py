@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 import json
 
-from ArtemisAPI.permissions import isAuthenticated
+from artemisapi.permissions import isAuthenticated
 
 
 class WeatherView(APIView):

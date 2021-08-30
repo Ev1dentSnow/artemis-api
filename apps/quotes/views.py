@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ArtemisAPI.permissions import isAuthenticated
+from artemisapi.permissions import isAuthenticated
 from apps.quotes import models
 from apps.quotes.models import Quote
 from apps.quotes.serializers import QuoteSerializer

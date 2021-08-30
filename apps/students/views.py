@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import permissions
 
-import ArtemisAPI.permissions as permissions
+import artemisapi.permissions as permissions
 from apps.classes.models import Classes, StudentClasses
 from apps.dots.models import Dots
 from apps.dots.serializers import DotsSerializer
