@@ -45,6 +45,7 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
+    url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('api/classes/', include('apps.classes.urls')),
     path('api/dots/', include('apps.dots.urls')),
     #path('api/teachers/', include('apps.teachers.urls')),
