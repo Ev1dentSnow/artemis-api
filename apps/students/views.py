@@ -38,15 +38,12 @@ class StudentInstanceView(APIView):
     def get(self, request, student_user_id):
         """
         Fetch one student
-        :param request:
-        :param student_user_id:
-        :return: Response
         """
         student = Student.objects.filter(user_id=student_user_id)
         serializer = StudentSerializer(student, many=True)
         if student:  # checking if queryset is empty
             return Response(serializer.data, status=status.HTTP_200_OK)
-        raise Http404
+        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
     def patch(self, request, student_user_id):
         """
