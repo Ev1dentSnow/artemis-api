@@ -27,7 +27,7 @@ SECRET_KEY = config('JWT_SECRET')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.artemisystem.xyz', 'artemisystem.xyz']
+ALLOWED_HOSTS = ['.artemisystem.xyz']
 
 pymysql.version_info = (1, 4, 2, "final", 0)
 pymysql.install_as_MySQLdb()
