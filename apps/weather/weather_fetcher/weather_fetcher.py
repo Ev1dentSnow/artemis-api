@@ -12,7 +12,11 @@ def fetch_forecast():  # APscheduler does not allow this method to be inside the
     openweathermaps_api_key = config('openweathermapsapikey')
     parameters = {"lat": lat, "lon": lon, "appid": openweathermaps_api_key, "exclude": excluded_data,
                   "units": "metric"}
-    result = requests.get(url="https://api.openweathermap.org/data/2.5/onecall", params=parameters)
+    try:
+        result = requests.get(url="https://api.openweathermap.org/data/2.5/onecall", params=parameters, timeout=5)
+        result.raise_for_status()
+    except Exception:
+        print('Error fetching latest weather data')
 
     with open("apps/weather/weather_data.json", "w") as weather_file:
         weather_file.seek(0)  # Take cursor to beginning of file
