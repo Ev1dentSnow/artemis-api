@@ -1,6 +1,9 @@
+from django.contrib.auth.models import Group
 from rest_framework import serializers
 
 from apps.teachers.models import Teacher
+from apps.users.models import User
+from apps.users.serializers import BasicUserSerializer
 
 
 class TeacherSerializer(serializers.Serializer):
@@ -12,3 +15,43 @@ class BasicTeacherUserDetailsSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
+
+class TeacherListSerializer(serializers.Serializer):
+    user_details = BasicUserSerializer(source='user')
+    subject = serializers.CharField()
+
+    def create(self, validated_data):
+        # password is the same as the username if a password is not supplied
+        if 'password' not in validated_data['user']:
+            validated_data['user']['password'] = validated_data['user']['username']
+        new_user = User.objects.create_user(**validated_data['user'])
+        teacher = Teacher.objects.create(user_id=new_user.id, subject=validated_data['subject'])
+        teacher_group = Group.objects.get(name='teachers')
+        new_user.groups.add(teacher_group)
+        return teacher
+
+    def update(self, instance, validated_data):
+        user_details = validated_data.pop('user', None)
+        student_details = validated_data
+
+        if user_details is not None:
+            user = User.objects.get(id=instance.user_id)
+            user.username = user_details.get('username', user.username)
+            user.set_password(user_details.get('password', user.password))
+            user.first_name = user_details.get('first_name', user.first_name)
+            user.last_name = user_details.get('last_name', user.last_name)
+            user.email = user_details.get('email', user.email)
+            user.dob = user_details.get('dob', user.dob)
+            user.email = user_details.get('email', user.email)
+            user.house = user_details.get('house', user.house)
+            user.comments = user_details.get('comments', user.comments)
+            user.save()
+
+        if student_details is not None:
+            instance.subject = validated_data.get('subject', instance.subject)
+            instance.save()
+
+        return instance
+
+
+

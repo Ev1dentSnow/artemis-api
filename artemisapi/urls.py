@@ -50,6 +50,7 @@ urlpatterns = [
     path('api/dots/', include('apps.dots.urls')),
     #path('api/teachers/', include('apps.teachers.urls')),
     path('api/students/', include('apps.students.urls')),
+    path('api/teachers/', include ('apps.teachers.urls')),
     path('api/users', apps.users.views.UsersListView.as_view()),
     path('api/announcements/', include('apps.announcements.urls')),
     path('api/weather', apps.weather.views.WeatherView.as_view()),
