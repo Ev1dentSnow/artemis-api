@@ -27,10 +27,15 @@ class AnnouncementsListView(APIView):
             return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def delete(self, request):
+        announcements = Announcement.objects.all()
+        announcements.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class AnnouncementInstanceView(APIView):
 
-    permission_classes = (isAuthenticated,)
+    permission_classes = (isAuthenticated | isAdmin,)
 
     def get(self, request, announcement_id):
         announcement = Announcement.objects.filter(id=announcement_id)
@@ -38,3 +43,8 @@ class AnnouncementInstanceView(APIView):
         if announcement:  # checking if queryset is empty
             return Response(serializer.data, status=status.HTTP_200_OK)
         raise NotFound(detail='announcement with that id does not exist')  # if id not found
+
+    def delete(self, request, announcement_id):
+        announcement = Announcement.objects.filter(id=announcement_id)
+        announcement.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
