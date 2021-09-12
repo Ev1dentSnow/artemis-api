@@ -1,10 +1,10 @@
 # artemis-api
 REST API for the Artemis School Management System written in the Django Rest Framework for Python
 
-##License
+## License
 MIT license
 
-##Running
+## Running
 
 1) Install required dependencies using ```pip3 install -r requirements.txt```
 
