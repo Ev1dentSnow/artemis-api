@@ -22,7 +22,7 @@ MIT license
     ```
 
 3) Run ```python3 manage.py runserver``` to start the server. DON'T USE THIS DEVELOPMENT SERVER IN PRODUCTION!
-##Contributing
+## Contributing
 
 This code is released "as is". Feel free to fork it if you wish, but no pull requests will be reviewed or accepted
 
