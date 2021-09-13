@@ -4,6 +4,10 @@ REST API for the Artemis School Management System written in the Django Rest Fra
 ## License
 MIT license
 
+## Docs
+
+Documentation with all the available endpoints of this API can be found at LOCALHOST:8000/redoc
+
 ## Running
 
 1) Install required dependencies using ```pip3 install -r requirements.txt```
