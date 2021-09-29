@@ -11,6 +11,7 @@ from apps.classes.models import Classes, StudentClasses
 from apps.dots.models import Dots
 from apps.dots.serializers import DotsSerializer
 from apps.marks.models import Marks
+from apps.marks.serializers import MarksInputSerializer
 from apps.students.models import Student
 from apps.students.serializers import StudentSerializer, StudentInstanceClassSerializer, StudentInstanceMarksSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -113,6 +114,16 @@ class StudentInstanceMarksView(APIView):
             marks_list.append(mark)
         serializer = StudentInstanceMarksSerializer(marks_list, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request, student_user_id):
+        """
+        Assign a mark for a specific assignment to a specific student
+        """
+        serializer = MarksInputSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'detail': 'mark assigned successfully'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class StudentsListView(APIView):
