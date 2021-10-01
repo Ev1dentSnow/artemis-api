@@ -2,7 +2,7 @@ from django.contrib.auth.models import Group
 from rest_framework import serializers
 from rest_framework.response import Response
 
-from apps.users.models import User
+from apps.users.models import User, House
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -22,6 +22,18 @@ class BasicUserSerializer(serializers.Serializer):  # For user creation
     first_name = serializers.CharField()
     last_name = serializers.CharField()
     comments = serializers.CharField(required=False)
+
+    def validate_house(self, house):
+
+        found = False
+        for i in House.objects.all():
+            if house == i.name:
+                found = True
+                break
+
+        if not found:
+            raise serializers.ValidationError('house does not exist')
+        return house
 
 
 class UniqueDetailsSerializer(serializers.Serializer):  # To check which usernames and emails have already been taken
