@@ -9,7 +9,7 @@ from apps.students.models import Student
 class MarksInputSerializer(serializers.Serializer):
     assignment_id = serializers.IntegerField()
     class_id = serializers.IntegerField()
-    student_id = serializers.IntegerField(source='student')
+    student_id = serializers.IntegerField()
     mark_awarded = serializers.DecimalField(max_digits=19, decimal_places=1)
 
     def validate_assignment_id(self, assignment_id):
@@ -36,5 +36,19 @@ class MarksInputSerializer(serializers.Serializer):
             raise serializers.ValidationError('student id does not exist')
         return student_id
 
+    def validate(self, data):
+        """
+        Check that mark for specified assignment + student does not already exist
+        """
+        if Marks.objects.filter(student_id=data['student_id'], assignment_id=data['assignment_id']).exists():
+            raise serializers.ValidationError('mark already exists for this assignment id and this student id')
+        return data
+
     def create(self, validated_data):
-        new_mark = Marks.objects.create()
+        new_mark = Marks.objects.create(assignment_id=validated_data['assignment_id'],
+                                        class_id_id=validated_data['class_id'],
+                                        student_id=validated_data['student_id'],
+                                        mark_awarded=validated_data['mark_awarded'])
+        return new_mark
+
+
