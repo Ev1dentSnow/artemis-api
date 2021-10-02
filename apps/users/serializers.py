@@ -11,6 +11,11 @@ class GroupSerializer(serializers.ModelSerializer):
         fields = ('name',)
 
 
+"""class BasicHouseSerializer(serializers.Serializer):
+    id = serializers.ReadOnlyField()
+    name = serializers.CharField()
+    colour = serializers.ReadOnlyField()"""
+
 class BasicUserSerializer(serializers.Serializer):  # For user creation
 
     id = serializers.ReadOnlyField()
@@ -23,14 +28,32 @@ class BasicUserSerializer(serializers.Serializer):  # For user creation
     last_name = serializers.CharField()
     comments = serializers.CharField(required=False)
 
-    def validate_house(self, house):
+    def validate_username(self, username):
+        found = False
+        for i in User.objects.all():
+            if username == i.username:
+                found = True
+                break
+        if found:
+            raise serializers.ValidationError('username already exists')
+        return username
 
+    def validate_email(self, email):
+        found = False
+        for i in User.objects.all():
+            if email == i.email:
+                found = True
+                break
+        if found:
+            raise serializers.ValidationError('email already exists')
+        return email
+
+    def validate_house(self, house):
         found = False
         for i in House.objects.all():
             if house == i.name:
                 found = True
                 break
-
         if not found:
             raise serializers.ValidationError('house does not exist')
         return house
@@ -40,8 +63,3 @@ class UniqueDetailsSerializer(serializers.Serializer):  # To check which usernam
     id = serializers.ReadOnlyField()
     username = serializers.CharField()
     email = serializers.EmailField()
-
-
-
-
-

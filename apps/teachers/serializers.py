@@ -2,7 +2,7 @@ from django.contrib.auth.models import Group
 from rest_framework import serializers
 
 from apps.teachers.models import Teacher
-from apps.users.models import User
+from apps.users.models import User, House
 from apps.users.serializers import BasicUserSerializer
 
 
@@ -24,6 +24,9 @@ class TeacherListSerializer(serializers.Serializer):
         # password is the same as the username if a password is not supplied
         if 'password' not in validated_data['user']:
             validated_data['user']['password'] = validated_data['user']['username']
+
+        # When creating a user we can't just provide the house name, the "create_user" method requires a house instance
+        validated_data['user']['house'] = House.objects.get(name=validated_data['user']['house'])
         new_user = User.objects.create_user(**validated_data['user'])
         teacher = Teacher.objects.create(user_id=new_user.id, subject=validated_data['subject'])
         teacher_group = Group.objects.get(name='teachers')
@@ -43,7 +46,8 @@ class TeacherListSerializer(serializers.Serializer):
             user.email = user_details.get('email', user.email)
             user.dob = user_details.get('dob', user.dob)
             user.email = user_details.get('email', user.email)
-            user.house = user_details.get('house', user.house)
+            user_house_instance = House.objects.get(name=user_details.get('house', user.house))
+            user.house = user_house_instance
             user.comments = user_details.get('comments', user.comments)
             user.save()
 

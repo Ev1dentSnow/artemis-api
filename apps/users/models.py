@@ -6,8 +6,11 @@ class House(models.Model):
     class Meta:
         db_table = 'houses'
 
-    name = models.CharField(unique=True, max_length=255)
+    name = models.CharField(unique=True, max_length=255, primary_key=True)
     colour = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
 
 
 class User(AbstractUser):
