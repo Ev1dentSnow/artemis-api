@@ -17,5 +17,5 @@ class TeacherClasses(models.Model):
     class Meta:
         db_table = 'teacher_classes'
 
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    class_id = models.ForeignKey(apps.classes.models.Classes, on_delete=models.CASCADE)
+    teacher = models.OneToOneField(Teacher, on_delete=models.CASCADE)
+    class_id = models.OneToOneField(apps.classes.models.Classes, on_delete=models.CASCADE)

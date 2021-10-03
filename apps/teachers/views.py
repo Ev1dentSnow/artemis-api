@@ -3,6 +3,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.classes.models import StudentClasses
+from apps.classes.serializers import StudentClassesSerializer
 from apps.teachers.models import Teacher, TeacherClasses
 from artemisapi import permissions
 from apps.teachers.serializers import BasicTeacherUserDetailsSerializer, TeacherListSerializer
@@ -74,4 +76,9 @@ class TeacherClassesView(APIView):
         """
         Fetches a list of classes a specific teacher teaches
         """
-        classes = TeacherClasses.objects.select_related('teacher_id', 'class_id_id').filter(teacher_id=teacher_user_id)
+        classes_list = []
+        class_details = StudentClasses.objects.select_related('student_id', 'class_id').all()
+        for i in class_details:
+            classes_list.append(i)
+        serializer = StudentClassesSerializer(classes_list, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

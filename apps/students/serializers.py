@@ -9,6 +9,10 @@ from apps.users.models import User
 from apps.users.serializers import BasicUserSerializer
 
 
+class BasicStudentUserDetailsSerializer(serializers.Serializer):
+    user_details = BasicUserSerializer(source='user')
+
+
 class StudentSerializer(serializers.Serializer):
     user_details = BasicUserSerializer(source='user')  # source is the actual name of the field in the model
 
@@ -83,4 +87,3 @@ class StudentInstanceMarksSerializer(serializers.Serializer):
         instance.mark_awarded = validated_data.get('mark_awarded', instance.mark_awarded)
         instance.save()
         return instance
-

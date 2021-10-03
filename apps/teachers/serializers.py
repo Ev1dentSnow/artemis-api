@@ -12,9 +12,7 @@ class TeacherSerializer(serializers.Serializer):
 
 
 class BasicTeacherUserDetailsSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
+    user_details = BasicUserSerializer(source='user')
 
 class TeacherListSerializer(serializers.Serializer):
     user_details = BasicUserSerializer(source='user')
