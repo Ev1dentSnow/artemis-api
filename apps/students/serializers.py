@@ -78,3 +78,9 @@ class StudentInstanceMarksSerializer(serializers.Serializer):
     assignment = AssignmentSerializer()
     mark_awarded = serializers.DecimalField(decimal_places=1, max_digits=19)
     class_id = serializers.IntegerField(source='class_id_id')
+
+    def update(self, instance, validated_data):
+        instance.mark_awarded = validated_data.get('mark_awarded', instance.mark_awarded)
+        instance.save()
+        return instance
+

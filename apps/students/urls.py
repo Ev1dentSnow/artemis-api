@@ -8,6 +8,6 @@ urlpatterns = [
     path('<int:student_user_id>', views.StudentInstanceView.as_view(), name='student instance view'),
     path('classes/', apps.classes.views.StudentClassesListView.as_view()),
     path('<int:student_user_id>/classes', apps.students.views.StudentInstanceClassesView.as_view()),
-    path('<int:student_user_id>/marks', apps.students.views.StudentInstanceMarksView.as_view()),
+    path('<int:student_user_id>/marks/', include('apps.marks.urls')),
     path('<int:student_user_id>/dots', apps.students.views.StudentInstanceDotsView.as_view()),
 ]

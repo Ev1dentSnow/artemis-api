@@ -100,9 +100,9 @@ class StudentInstanceDotsView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class StudentInstanceMarksView(APIView):
-    # TODO: Make it so that students can't view each other's marks for privacy reasons
-    permission_classes = (permissions.isStudent | permissions.isTeacher | permissions.isAdmin,)
+class StudentInstanceMarksListView(APIView):
+
+    permission_classes = (permissions.isOwner | permissions.isTeacher | permissions.isAdmin,)
 
     def get(self, request, student_user_id):
         """
@@ -124,6 +124,35 @@ class StudentInstanceMarksView(APIView):
             serializer.save()
             return Response({'detail': 'mark assigned successfully'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class StudentInstanceMarksInstanceView(APIView):
+
+    permission_classes = (permissions.isOwner | permissions.isTeacher | permissions.isAdmin,)
+
+    def get(self, request, student_user_id, mark_id):
+        """
+        Get a specific mark that belongs to a specific student
+        """
+        mark = Marks.objects.get()
+        serializer = StudentInstanceMarksSerializer(mark)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def patch(self, request, student_user_id, mark_id):
+        """
+        Modify a specific mark that belongs to a specific student
+        """
+        mark = Marks.objects.get(id=mark_id, student_id=student_user_id)
+        serializer = StudentInstanceMarksSerializer(mark, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, student_user_id, mark_id):
+        mark = Marks.objects.get(id=mark_id, student_id=student_user_id)
+        mark.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class StudentsListView(APIView):

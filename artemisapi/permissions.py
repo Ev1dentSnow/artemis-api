@@ -42,7 +42,7 @@ class isOwner(BasePermission):
                 requested_id = word
                 break
 
-        if int(request.user.id) == int(requested_id):
+        if int(request.user.id) == int(requested_id) and request.method in SAFE_METHODS:
             has_permission = True
             return has_permission
         has_permission = False
