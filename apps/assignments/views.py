@@ -5,9 +5,12 @@ from rest_framework.views import APIView
 
 from apps.assignments.models import Assignment
 from apps.assignments.serializers import AssignmentSerializer
+from artemisapi import permissions
 
 
 class AssignmentsListView(APIView):
+
+    permission_classes = (permissions.isTeacher | permissions.isAdmin,)
 
     def get(self, request):
         assignments = Assignment.objects.all()
