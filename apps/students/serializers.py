@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from apps.assignments.serializers import AssignmentSerializer
 from apps.classes.models import Classes
 from apps.students.models import Student
-from apps.users.models import User
+from apps.users.models import User, House
 from apps.users.serializers import BasicUserSerializer
 
 
@@ -27,6 +27,8 @@ class StudentSerializer(serializers.Serializer):
         # password is the same as the username if a password is not supplied
         if 'password' not in validated_data['user']:
             validated_data['user']['password'] = validated_data['user']['username']
+
+        validated_data['user']['house'] = House.objects.get(name=validated_data['user']['house'])
         new_user = User.objects.create_user(**validated_data['user'])
         student = Student.objects.create(user_id=new_user.id, form=validated_data['form'],
                                          enrollment_year=validated_data['enrollment_year'],

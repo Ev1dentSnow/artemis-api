@@ -16,6 +16,6 @@ class StudentClasses(models.Model):
     class Meta:
         db_table = 'student_classes'
 
-    student_id = models.OneToOneField(apps.students.models.Student, on_delete=models.CASCADE)
-    class_id = models.OneToOneField(Classes, on_delete=models.CASCADE)
+    student_id = models.ForeignKey(apps.students.models.Student, on_delete=models.CASCADE)
+    class_id = models.ForeignKey(Classes, on_delete=models.CASCADE)
     start_date = models.DateField()  # Date which the student was assigned to this class
