@@ -18,3 +18,11 @@ class DotsListView(APIView):
         data = Dots.objects.all()
         serializer = DotsSerializer(data, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        serializer = DotsSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'detail': 'dot created successfully'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+

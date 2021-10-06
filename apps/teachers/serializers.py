@@ -10,6 +10,9 @@ class TeacherSerializer(serializers.Serializer):
     user_id = serializers.IntegerField()
     subject = serializers.ReadOnlyField()
 
+class TeacherDotsSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    subject = serializers.ReadOnlyField()
 
 class BasicTeacherUserDetailsSerializer(serializers.Serializer):
     user_details = BasicUserSerializer(source='user')

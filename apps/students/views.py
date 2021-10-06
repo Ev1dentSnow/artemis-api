@@ -99,6 +99,17 @@ class StudentInstanceDotsView(APIView):
         serializer = DotsSerializer(dots, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def post(self, request, student_user_id):
+        """
+        Add a new dot to a student
+        """
+        serializer = DotsSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'detail': 'dot created successfully'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 class StudentInstanceMarksListView(APIView):
 
