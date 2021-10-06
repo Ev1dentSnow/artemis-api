@@ -1,7 +1,7 @@
 from django.urls import path
-
-from apps.dots import views
+import apps.students.views
 
 urlpatterns = [
-    path('', views.DotsListView.as_view()),
+    path('', apps.students.views.StudentInstanceDotsView.as_view()),
+    path('<int:dot_id>', apps.students.views.StudentInstanceDotsInstanceView.as_view())
 ]

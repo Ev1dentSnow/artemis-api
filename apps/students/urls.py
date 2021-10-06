@@ -9,5 +9,5 @@ urlpatterns = [
     path('classes/', apps.classes.views.StudentClassesListView.as_view()),
     path('<int:student_user_id>/classes', apps.students.views.StudentInstanceClassesView.as_view()),
     path('<int:student_user_id>/marks/', include('apps.marks.urls')),
-    path('<int:student_user_id>/dots', apps.students.views.StudentInstanceDotsView.as_view()),
+    path('<int:student_user_id>/dots/', include('apps.dots.urls')),
 ]

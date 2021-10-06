@@ -110,9 +110,19 @@ class StudentInstanceDotsView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class StudentInstanceDotsInstanceView(APIView):
+    permission_classes = (permissions.isOwner | permissions.isTeacher | permissions.isAdmin,)
+
+    def delete(self, request, student_user_id, dot_id):
+        """
+        Delete a student's dot
+        """
+        dot = Dots.objects.get(pk=dot_id)
+        dot.delete()
+        return Response({'detail': 'dot removed successfully'}, status=status.HTTP_204_NO_CONTENT)
+
 
 class StudentInstanceMarksListView(APIView):
-
     permission_classes = (permissions.isOwner | permissions.isTeacher | permissions.isAdmin,)
 
     def get(self, request, student_user_id):
@@ -138,7 +148,6 @@ class StudentInstanceMarksListView(APIView):
 
 
 class StudentInstanceMarksInstanceView(APIView):
-
     permission_classes = (permissions.isOwner | permissions.isTeacher | permissions.isAdmin,)
 
     def get(self, request, student_user_id, mark_id):

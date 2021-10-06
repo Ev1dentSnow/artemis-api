@@ -7,7 +7,7 @@ from apps.users.serializers import BasicUserSerializer
 
 
 class TeacherSerializer(serializers.Serializer):
-    user_id = serializers.IntegerField()
+    id = serializers.IntegerField(source='user_id')
     subject = serializers.ReadOnlyField()
 
 class TeacherDotsSerializer(serializers.Serializer):
